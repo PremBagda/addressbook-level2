@@ -42,19 +42,37 @@ public class FindCommand extends Command {
 
     /**
      * Retrieves all persons in the address book whose names contain some of the specified keywords.
+     * Keywords need not be case sensitive.
      *
      * @param keywords for searching
      * @return list of persons found
      */
     private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
+        final Set<String> lowerCaseKeywords = lowerCaseAllWords(keywords);
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
             final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
+            final Set<String> lowerCaseWordsInName = lowerCaseAllWords(wordsInName);
+            if (!Collections.disjoint(lowerCaseWordsInName, lowerCaseKeywords)) {
                 matchedPersons.add(person);
             }
         }
         return matchedPersons;
+    }
+
+    /**
+     * Makes all words lower case.
+     *
+     * @param words words to be lower cased
+     * @return lower cased words
+     */
+    private HashSet<String> lowerCaseAllWords(Set<String> words) {
+        final HashSet<String> lowerCaseKeywords = new HashSet<>();
+        // Lower case key words.
+        for (String name: words) {
+            lowerCaseKeywords.add(name.toLowerCase());
+        }
+        return lowerCaseKeywords;
     }
 
 }
