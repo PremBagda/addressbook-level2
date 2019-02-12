@@ -23,10 +23,10 @@ public class FindCommandTest {
     @Test
     public void execute() throws IllegalValueException {
         //same word, same case: matched
-        assertFindCommandBehavior(new String[]{"Amy"}, Arrays.asList(td.amy));
+        assertFindCommandBehavior(new String[]{"Amy"}, Collections.singletonList(td.amy));
 
         //same word, different case: matched
-        assertFindCommandBehavior(new String[]{"aMy"}, Arrays.asList(td.amy));
+        assertFindCommandBehavior(new String[]{"aMy"}, Collections.singletonList(td.amy));
 
         //partial word: not matched
         assertFindCommandBehavior(new String[]{"my"}, Collections.emptyList());
@@ -40,7 +40,7 @@ public class FindCommandTest {
             Arrays.asList(td.amy, td.bill, td.candy));
 
         //repeated keywords: matched
-        assertFindCommandBehavior(new String[]{"Amy", "Amy"}, Arrays.asList(td.amy));
+        assertFindCommandBehavior(new String[]{"Amy", "Amy"}, Collections.singletonList(td.amy));
 
         //Keyword matching a word in address: not matched
         assertFindCommandBehavior(new String[]{"Clementi"}, Collections.emptyList());
